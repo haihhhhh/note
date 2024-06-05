@@ -61,8 +61,9 @@ export function NoteItemContent({
           const sidebarToggle = document.getElementById(
             'sidebar-toggle',
           ) as HTMLInputElement
-          if (sidebarToggle)
+          if (sidebarToggle) {
             sidebarToggle.checked = true
+          }
           router.push(`/note/${id}`)
         }}
       >

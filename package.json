@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@antfu/eslint-config": "^2.18.1",
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
     "@reduxjs/toolkit": "^2.2.5",
     "dayjs": "^1.11.11",
     "marked": "^12.0.2",

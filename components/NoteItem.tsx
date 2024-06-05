@@ -11,7 +11,6 @@ interface NoteItemProps {
 export function NoteItem(noteItemProps: NoteItemProps) {
   const { noteId, note } = noteItemProps
   const { title, content, updateTime } = note
-
   return (
     <NoteItemContent
       id={noteId}

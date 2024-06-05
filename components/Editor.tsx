@@ -1,16 +1,15 @@
-import { useState } from 'react'
+'use client'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
 
 import { deleteNote, saveNote } from '@/app/action'
 import DeleteButton from '@/components/DeleteButton'
 import { NotePreview } from '@/components/NotePreview'
 import SaveButton from '@/components/SaveButton'
-import { EditorFormState, initialState } from '@/lib/articleSlice'
+import { EditorFormState, EditorFormStateCode, initialState } from '@/lib/articleDataContext'
+// import { EditorFormState, initialState } from '@/lib/articleSlice'
 
-export enum EditorFormStateCode {
-  Success = 'success',
-  Error = 'error',
-}
 export default function Editor({
   noteId,
   initialTitle,
@@ -20,6 +19,7 @@ export default function Editor({
   initialTitle: string
   initialBody: string
 }) {
+  const router = useRouter()
   const [title, setTitle] = useState(initialTitle)
   const [body, setBody] = useState(initialBody)
 
@@ -32,16 +32,15 @@ export default function Editor({
     deleteNote,
     initialState,
   )
-  // useEffect(() => {
-  //   if (saveState?.code === EditorFormStateCode.Success) {
-  //     // 派发表单提交事件
-  //     store.dispatch(articleSliceActions.formSubmit(saveState))
-  //   }
-  //   if (deleteState?.code === EditorFormStateCode.Success) {
-  //     // 派发表单提交事件
-  //     store.dispatch(articleSliceActions.formSubmit(deleteState))
-  //   }
-  // }, [saveState, deleteState])
+
+  useEffect(() => {
+    if (saveState?.code === EditorFormStateCode.Success) {
+      router.refresh()
+    }
+    if (deleteState?.code === EditorFormStateCode.Success) {
+      // router.refresh()
+    }
+  }, [saveState, deleteState])
 
   return (
     <>

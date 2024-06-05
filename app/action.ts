@@ -1,15 +1,15 @@
+'use server'
+import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
-import { EditorFormStateCode } from '@/components/Editor'
-import { Article, createArticle, deleteArticleById, updateArticle } from '@/lib/articleDataContext'
-import { EditorFormState } from '@/lib/articleSlice'
+import { Article, EditorFormState, EditorFormStateCode, createArticle, deleteArticleById, updateArticle } from '@/lib/articleDataContext'
 
 const schema = z.object({
   title: z.string(),
   content: z.string().min(1, '请填写内容').max(100, '字数最多 100'),
 })
 
-export function saveNote(state: EditorFormState, formData: FormData) {
+export async function saveNote(state: EditorFormState, formData: FormData) {
   const noteId = formData.get('noteId')
   // console.log(`saveNote noteid=${noteId}`)
   const data = {
@@ -26,19 +26,23 @@ export function saveNote(state: EditorFormState, formData: FormData) {
       errors: validated.error?.issues,
     }
   }
-  if (noteId)
+  if (noteId) {
     updateArticle(noteId.toString(), data)
-  else
+  }
+  else {
     createArticle(data)
+  }
+  revalidatePath('/')
   return { message: !noteId ? `Add Success!` : 'update Success!', code: EditorFormStateCode.Success }
 }
 
 // 删除note
-export function deleteNote(prestate: EditorFormState, formData: FormData) {
+export async function deleteNote(prestate: EditorFormState, formData: FormData) {
   const noteId = formData.get('noteId')
   // 校验数据
   if (noteId) {
     deleteArticleById(noteId.toString())
+    revalidatePath('/')
     return { message: `delete Success!`, code: EditorFormStateCode.Success }
   }
   return { message: `delete failed!`, code: EditorFormStateCode.Error }

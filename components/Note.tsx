@@ -6,7 +6,6 @@ import { Article } from '@/lib/articleDataContext'
 
 export function Note({ noteId, note }: { noteId: string, note: Article }) {
   const { title, updateTime, content } = note
-
   return (
     <>
       <div className="note">

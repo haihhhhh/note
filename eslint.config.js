@@ -31,6 +31,6 @@ module.exports = antfu({
         'warnOnUnassignedImports': true,
       },
     ],
-
+    'curly': ['error', 'all'],
   },
 })
