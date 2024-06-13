@@ -12,9 +12,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["components/*"],
-      "@/lib/*": ["lib/*"],
-      "fs": ["node_modules/file-system"],
-      "node:fs": ["node_modules/file-system"]
+      "@/lib/*": ["lib/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

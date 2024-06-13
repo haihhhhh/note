@@ -34,6 +34,7 @@ export const initialState: EditorFormState = {
 export async function listAllArticles(): Promise<Article[]> {
   try {
     const data = await readFile('lib/data.json')
+    await new Promise(resolve => setTimeout(resolve, 3000))
     const parsedArticleData = JSON.parse(data.toString()) as Record<string, string> // 确保解析后的数据被正确断言
 
     // 遍历解析后的对象，将每个文章字符串再次解析为对象
